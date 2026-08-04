@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 21st Birthday | Tanisha Rani Acharjee</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti & FontAwesome Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Root Variables --- */
+        :root {
+            --primary-red: #8B0000;
+            --deep-pink: #D81B60;
+            --soft-pink: #FFB6C1;
+            --accent-gold: #FFD700;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* লাল এবং পিঙ্ক কালারের ব্যাকগ্রাউন্ড */
+        body {
+            background: linear-gradient(135deg, #8B0022 0%, #D81B60 50%, #C2185B 100%);
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* --- Floating Hearts Container --- */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(255, 209, 220, 0.4);
+            animation: floatUp 8s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Music Toggle Button --- */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--white);
+            color: var(--deep-pink);
+            border: 2px solid var(--accent-gold);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(180deg, #6B001A 0%, var(--deep-pink) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 70px 20px 120px;
+            border-bottom-left-radius: 50% 40px;
+            border-bottom-right-radius: 50% 40px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+
+        .hero h3 {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--soft-pink);
+            margin-bottom: 5px;
+        }
+
+        .hero h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: var(--accent-gold);
+            margin: 5px 0;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* --- Profile Frame Section --- */
+        .profile-container {
+            margin-top: -90px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .frame {
+            position: relative;
+            width: 290px;
+            height: 360px;
+            border: 8px solid var(--accent-gold);
+            border-radius: 24px;
+            padding: 10px;
+            background: var(--white);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease;
+        }
+
+        .frame:hover {
+            transform: scale(1.03) rotate(-1deg);
+        }
+
+        .frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+        }
+
+        .age-badge {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: var(--primary-red);
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1.5rem;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Live Timer Section --- */
+        .timer-container {
+            max-width: 600px;
+            margin: 30px auto 10px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .timer-title {
+            color: var(--accent-gold);
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .timer-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 12px 18px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            min-width: 75px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .time-box label {
+            font-size: 0.75rem;
+            color: var(--white);
+            text-transform: uppercase;
+        }
+
+        /* --- Celebration Button --- */
+        .celebrate-btn-container {
+            text-align: center;
+            margin: 35px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .celebrate-btn {
+            background: linear-gradient(45deg, var(--accent-gold), #FFA500);
+            color: #6B001A;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .celebrate-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* --- Wish Card & Content Sections --- */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--accent-gold);
+            font-size: 2rem;
+            margin-bottom: 25px;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 6px solid var(--deep-pink);
+            line-height: 1.9;
+            font-size: 1.1rem;
+        }
+
+        /* --- Guestbook Section --- */
+        .guestbook {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 30px;
+        }
+
+        .guestbook h3 {
+            color: var(--deep-pink);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .guestbook input, .guestbook textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #CCC;
+            border-radius: 12px;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .guestbook input:focus, .guestbook textarea:focus {
+            border-color: var(--deep-pink);
+        }
+
+        .guestbook button {
+            background: var(--deep-pink);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .guestbook button:hover {
+            background: var(--primary-red);
+        }
+
+        .wishes-list {
+            margin-top: 25px;
+        }
+
+        .wish-item {
+            background: #FFE6EC;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            animation: fadeIn 0.5s ease-in-out;
+            color: #333;
+            border-left: 4px solid var(--deep-pink);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            background: #4A0012;
+            color: var(--white);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Hearts -->
+    <div class="heart-bg" id="heartContainer"></div>
+
+    <!-- ইন্টারনেট অনলাইন ডিরেক্ট বার্থডে মিউজিক MP3 -->
+    <audio id="bgAudio" loop preload="auto">
+        <source src="C:\Users\ACER\Downloads\durjoy.mp3" type="audio/mpeg">
+    </audio>
+    
+    <button class="music-btn" onclick="toggleMusic()" id="musicBtn" title="Toggle Music">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Hero Header -->
+    <header class="hero">
+        <h3>Celebrating A Magical Milestone</h3>
+        <h1>Tanisha Rani Acharjee</h1>
+        <p>Welcome to 21! ✨ Bright, Beautiful & Unstoppable.</p>
+    </header>
+
+    <!-- Profile Photo Section -->
+    <div class="profile-container">
+        <div class="frame">
+            <div class="age-badge">21</div>
+            <img src="C:\Users\ACER\Downloads\tanisha.jpg">
+        </div>
+    </div>
+
+    <!-- Live Birthday Counter -->
+    <div class="timer-container">
+        <div class="timer-title">Time Since You Made The World Brighter</div>
+        <div class="timer-boxes">
+            <div class="time-box"><span id="days">0</span><label>Days</label></div>
+            <div class="time-box"><span id="hours">0</span><label>Hours</label></div>
+            <div class="time-box"><span id="minutes">0</span><label>Mins</label></div>
+            <div class="time-box"><span id="seconds">0</span><label>Secs</label></div>
+        </div>
+    </div>
+
+    <!-- Celebration Fireworks Button -->
+    <div class="celebrate-btn-container">
+        <button class="celebrate-btn" onclick="triggerConfetti(); playMusic();">🎉 Celebrate Tanisha's 21st! 🎉</button>
+    </div>
+
+    <!-- Main Message Section -->
+    <section class="content-section">
+        <h2 class="section-title">Happy 21st Birthday! 💕</h2>
+        <div class="card">
+            <p>
+                <strong>শুভ জন্মদিন, আমার লক্ষ্মী! ❤️</strong><br>
+                আজকের দিনটা শুধু তোমার। তোমার জীবনের প্রতিটি মুহূর্ত সুখ, ভালোবাসা আর সাফল্যে ভরে উঠুক। সব স্বপ্ন পূরণ হোক, মুখের হাসিটা যেন কখনো ম্লান না হয়। তুমি সবসময় সুস্থ, ভালো এবং আনন্দে থেকো। আমার জীবনে থাকার জন্য ধন্যবাদ। অনেক অনেক ভালোবাসা। 🎂🌹
+            </p>
+        </div>
+
+            <div class="wishes-list" id="wishesList"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Designed with ❤️ for Tanisha Rani Acharjee's 21st Birthday</p>
+    </footer>
+
+    <!-- JavaScript Code -->
+    <script>
+        let isPlaying = false;
+
+        window.onload = function() {
+            triggerConfetti();
+            createHearts();
+            setupAutoPlay();
+        };
+
+        function playMusic() {
+            const audio = document.getElementById('bgAudio');
+            const btn = document.getElementById('musicBtn');
+            audio.play().then(() => {
+                isPlaying = true;
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(err => {
+                console.log("Autoplay blocked by browser. User interaction needed.");
+            });
+        }
+
+        function setupAutoPlay() {
+            const handleFirstTouch = () => {
+                if (!isPlaying) {
+                    playMusic();
+                }
+                document.removeEventListener('click', handleFirstTouch);
+                document.removeEventListener('touchstart', handleFirstTouch);
+            };
+
+            document.addEventListener('click', handleFirstTouch);
+            document.addEventListener('touchstart', handleFirstTouch);
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgAudio');
+            const btn = document.getElementById('musicBtn');
+
+            if (isPlaying) {
+                audio.pause();
+                btn.innerHTML = '<i class="fas fa-music"></i>';
+                isPlaying = false;
+            } else {
+                playMusic();
+            }
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#FFFFFF', '#FFD1DC', '#D81B60']
+            });
+        }
+
+        const birthDate = new Date();
+        birthDate.setFullYear(birthDate.getFullYear() - 21);
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - birthDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function createHearts() {
+            const container = document.getElementById('heartContainer');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('i');
+                heart.className = 'fas fa-heart floating-heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        function addWish() {
+            const name = document.getElementById('nameInput').value.trim();
+            const wish = document.getElementById('wishInput').value.trim();
+            const list = document.getElementById('wishesList');
+
+            if (name && wish) {
+                const item = document.createElement('div');
+                item.className = 'wish-item';
+                item.innerHTML = `<strong>${name}:</strong> ${wish}`;
+                list.prepend(item);
+
+                document.getElementById('nameInput').value = '';
+                document.getElementById('wishInput').value = '';
+
+                confetti({ particleCount: 40, spread: 60 });
+            } else {
+                alert('অনুগ্রহ করে নাম এবং মেসেজ উভয়ই লিখুন!');
+            }
+        }
+    </script>
+</body>
+</html>
